@@ -1,0 +1,39 @@
+{
+	"author": "John Le Drew <jp@antz29.com> (http://antz29.com)",
+	"name": "configr",
+	"description": "A library parse JSON configuration files and monitor for changes.",
+	"keywords": ["configuration", "json"],
+	"version": "0.1.0",
+	"homepage": "http://github.com/antz29/node-configr",
+	"repository": {
+		"type": "git",
+		"url": "git:/git://github.com/antz29/node-configr.git"
+	},
+
+   	"bugs": {
+        	"email": "configr-bugs@antz29.com",
+	        "url": "http://github.com/antz29/node-configr/issues"
+    	},
+
+	"engines": {
+		"node": ">=0.6.0"
+	},
+
+	"directories": {
+        	"lib": "./src/lib"
+	},
+
+	"main" : "./src/lib/configr.js",
+
+	"dependencies": {
+		"underscore" : ">=1.2.1"
+	},
+
+	"devDependencies": {
+		"expresso" : ">=0.9.0",
+		"linter" : ">=0.0.7"
+	},
+	"scripts" : {
+		"test" : "./node_modules/expresso/bin/expresso"
+	}
+}
