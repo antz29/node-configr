@@ -3,7 +3,7 @@
 	"name": "configr",
 	"description": "A library parse JSON configuration files and monitor for changes.",
 	"keywords": ["configuration", "json"],
-	"version": "0.0.2",
+	"version": "0.1.0",
 	"homepage": "http://github.com/antz29/node-configr",
 	"repository": {
 		"type": "git",
