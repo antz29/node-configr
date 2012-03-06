@@ -2,14 +2,12 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 
-
 /**
  * @api private
  */
 function NodeConfigr() {
 	
-	var env,
-	    root,
+	var root,
 	    config = {},
 	    loading = false;
 
@@ -50,7 +48,7 @@ function NodeConfigr() {
 
 			function checkFiles() {
 				if (files.length || to_process.length || processing) return;
-				clearTimeout(read_files);				
+				clearTimeout(read_files);			
 				clearTimeout(process_queue);
 				clearTimeout(check_files);
 				callback(out);
@@ -114,10 +112,14 @@ function NodeConfigr() {
 		return root;
 	};
 
-	this.load = function(new_env,callback) {
-		if (_.isFunction(new_env)) callback = new_env;
-		if (new_env != env) config = {};
-		env = new_env;
+	this.load = function(env,callback) {
+		if (_.isFunction(env)) {
+			callback = env;
+			env = null;
+		}
+
+		config = {};
+
 		loadConfig(env,function(data) {
 			config = mergeConfig(config,data);
 			callback();
@@ -135,4 +137,4 @@ function NodeConfigr() {
  * @return {NodeConfigr} NodeConfigr instance.
  * @api public
  */
-exports.create = function(env) { return new NodeConfigr(env); };
+exports.create = function() { return new NodeConfigr(); };
