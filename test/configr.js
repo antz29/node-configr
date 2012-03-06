@@ -4,20 +4,20 @@ var assert = require('assert'),
 
 require('underscore');
 
-var test_dir = process.cwd() + '/test/config_test';
+var test_dir = path.resolve(path.dirname(new String(process.argv[2]))) + '/test/config_test';
 
 var tests = {
 	'You can get a configr instance' : function(beforeExit, assert) {
-		var c = require('configr').create();
+		var c = require('../').create();
 		assert.ok(c);
 	},
 	'You can set and get the config directory' : function(beforeExit, assert) {
-		var c = require('configr').create();
+		var c = require('../').create();
 		c.setDirectory(test_dir);
 		assert.ok(c.getDirectory() === test_dir);
 	},
 	'You can load the shared config' : function(beforeExit, assert) {
-		var c = require('configr').create();
+		var c = require('../').create();
 		c.setDirectory(test_dir);
 		c.load(function() {
 			assert.equal(c.get().db.db,'fred');
@@ -29,7 +29,7 @@ var tests = {
 
 	},
 	'You can load the config for an environment' : function(beforeExit, assert) {
-		var c = require('configr').create();
+		var c = require('../').create();
 		c.setDirectory(test_dir);
 		c.load('dev',function() {
 			assert.equal(c.get().db.db,'fred');
@@ -40,7 +40,7 @@ var tests = {
 		});
 	},
 	'You can reload the config and change the environment' : function(beforeExit, assert) {
-		var c = require('configr').create();
+		var c = require('../').create();
 		c.setDirectory(test_dir);
 
 		c.load(function() {
