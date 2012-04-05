@@ -21,16 +21,16 @@ configuration that is shares between all environments.
 
 To create environment specific overrides you create sub directories, for each environment, and
 place the configuration files in the there for each environment. For example, you start off with a
-config dir, and in there you have 'general.json' and 'db.json' files. See below
+config dir, and in there you have 'general.js' and 'db.js' files. See below
 
-    // general.json
-    {
+    // general.js
+    module.exports.config = {
         "app_name" : "test_app",
         "hawtness" : "extreme"
     }
 
-    // db.json
-    {
+    // db.js
+    module.exports.config = {
         "host" : "127.0.0.1",
         "user" : "myuser",
         "pass" : "mypass",
@@ -54,17 +54,16 @@ These files are merged into an internal structure:
     }
 
 You can then create environment specific config overrides; let's create a dev environment; create 
-a folder called 'dev' in the config dir, and we add a db.json file with specific overrides for 
+a folder called 'dev' in the config dir, and we add a db.js file with specific overrides for 
 the dev environment. 
 
-    {
+     module.exports.config = {
         "host" : "dev.db.com",
         "user" : "devuser",
         "pass" : "devpass"
     }
 
-When you create a configr instance (as shown below) with `require("configr").create('dev');` 
-The internal structure will be as follows:
+When you create a configr instance (as shown below) the internal structure will be as follows:
 
     {
         "general" : {
@@ -80,31 +79,28 @@ The internal structure will be as follows:
         }
     }
 
-Configr will monitor for any changes to loaded config files and load the changed files dynamically.
-
 ## Usage
 
     // Create a new configr instance for the provided environment. This is any arbitary name; 
     // dev, staging, prod, etc. (you can have multiple configr instances that are independant 
     // of one another).
 
-    var c = require("configr").create();
+    var Configr = require("configr");
 
-    // Set the directory that contains your JSON files.
-
-    c.setDirectory('/my/config/dir');
+    var c = new Configr('/path/to/config/files');
 	
     // Load the configuration
 
-    c.load(function() {
+    c.on('ready',function() {
         // Access the configuration values
         c.get().db // will return { "host" : "127.0.0.1", "user" : "myuser", "pass" : "mypass", "db" : "mydb"}
         c.get().general.app_name // will return "test_app"
     });
 
     // Load the configuration for the dev environment
+    var c = new Configr('/path/to/config/files','dev');
 
-    c.load('dev',function() {
+    c.on('ready',function() {
         // Access the configuration values
         c.get().db // will return { "host" : "dev.db.com", "user" : "devuser", "pass" : "devpass", "db" : "mydb"}
         c.get().general.app_name // will return "test_app"
