@@ -1,5 +1,7 @@
 # node-configr - Configure your apps
 
+[![Build Status](https://secure.travis-ci.org/antz29/node-configr.png?branch=master)](http://travis-ci.org/antz29/node-configr)
+
 ## Installation
 
     npm install configr
