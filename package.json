@@ -11,9 +11,9 @@
 	},
 
    	"bugs": {
-        	"email": "configr-bugs@antz29.com",
-	        "url": "http://github.com/antz29/node-configr/issues"
-    	},
+       	"email": "configr-bugs@antz29.com",
+	    "url": "http://github.com/antz29/node-configr/issues"
+    },
 
 	"engines": {
 		"node": ">=0.6.0"
@@ -23,15 +23,15 @@
         	"lib": "./src/lib"
 	},
 
-	"main" : "./src/lib/configr.js",
+	"main" : "./src/lib/configr.coffee",
 
 	"dependencies": {
-		"underscore" : ">=1.2.1"
+		"underscore" : "*",
+		"coffee-script" : "*"
 	},
 
 	"devDependencies": {
-		"expresso" : ">=0.9.0",
-		"linter" : ">=0.0.7"
+		"expresso" : "*"
 	},
 	"scripts" : {
 		"test" : "./node_modules/expresso/bin/expresso"
