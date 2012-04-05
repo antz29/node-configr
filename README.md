@@ -1,6 +1,7 @@
 # node-configr - Configure your apps
 
-[![Build Status](https://secure.travis-ci.org/antz29/node-configr.png?branch=master)](http://travis-ci.org/antz29/node-configr)
+* master [![Build Status](https://secure.travis-ci.org/antz29/node-configr.png?branch=master)](http://travis-ci.org/antz29/node-configr)
+* develop [![Build Status](https://secure.travis-ci.org/antz29/node-configr.png?branch=develop)](http://travis-ci.org/antz29/node-configr)
 
 ## Installation
 
