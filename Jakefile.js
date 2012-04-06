@@ -1,5 +1,10 @@
 var exec = require('child_process').exec;
 
+desc('This is the default task.');
+task('default', ['test'], function (params) {
+  
+});
+
 desc('Run the tests');
 task('test', [], function (params) {
 	exec('./node_modules/expresso/bin/expresso', function (error, stdout, stderr) { 
