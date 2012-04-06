@@ -17,7 +17,7 @@ loadConfigFromDir = (dir, callback) ->
         try
           out[name] = require(file_path).config
         catch error
-          return null
+          return throw error
     callback(out)
 
 loadConfig = (root,env,callback) ->
@@ -82,17 +82,6 @@ class Configr extends EventEmitter
         this.emit('ready')
       else
         this.emit('updated')
-
-  ###
-  Don't watch at the moment as it doesn't seem to work. One for another day...
-  _watch: ->
-    if @watcher then return null
-    console.log 'setup watcher'
-    @watcher = fs.watch @root, (event,filename) => 
-      console.log(filename)
-      if filename then delete require.cache[filename]
-      this._load(@env)
-  ###
 
   get: ->
     return @config
