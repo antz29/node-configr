@@ -5,28 +5,28 @@ _     = require('underscore')
 EventEmitter = require('events').EventEmitter
 
 # Helper Functions
-loadConfigFromDir = (dir, callback) ->
+loadConfigFromDir = (ext, dir, callback) ->
   out = {}
 
   fs.readdir dir,(err,files) -> 
     for file in files 
       do (file) ->
-        if path.extname(file) != '.js' then return null
+        if path.extname(file) != ".#{ext}" then return null
         file_path = dir + '/' + file
-        name = file.replace('.js','')
+        name = file.replace(".#{ext}",'')
         try
           out[name] = require(file_path).config
         catch error
           return throw error
     callback(out)
 
-loadConfig = (root,env,callback) ->
-    loadConfigFromDir root, (data) ->
-      if !env then return callback(data)
+loadConfig = (ext, root,env,callback) ->
+    loadConfigFromDir ext, root, (data) ->
+      if !env then return callback(data)      
       dir = root + '/' + env
       path.exists dir, (exists) ->
         if !exists then return callback(data);
-        loadConfigFromDir dir, (env_data) ->
+        loadConfigFromDir ext, dir, (env_data) ->
           callback mergeConfig(data,env_data);
 
 isPlainObject = (obj) -> 
@@ -53,35 +53,36 @@ mergeConfig = (conf1, conf2) ->
 
 # The main Configr class
 class Configr extends EventEmitter
-  constructor: (root, env) ->
-    @root = root
-    @env = env
+  constructor: (opt = {}) ->
+
+    @options = _.defaults(opt,{
+      root: root,
+      env: null,
+      language: 'js'
+    });
+
     @config = {}
-    @watcher = null
     @loading = false
 
-    this._load(@env,true)
+    this._load()
     
     #this._watch() see below
 
   getRoot: ->
-    return @root;
+    return @options.root;
 
   getEnv: ->
-    return @env;
+    return @options.env;
   
-  _load: (env, first = false) ->
+  _load: () ->
     if (@loading) then return null
 
     @loading = true
 
-    loadConfig @root, env, (data) =>
+    loadConfig @options.language, @options.root, @options.env, (data) =>
       @config = mergeConfig(@config,data)
       @loading = false
-      if first
-        this.emit('ready')
-      else
-        this.emit('updated')
+      this.emit('ready')
 
   get: ->
     return @config
