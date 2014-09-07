@@ -1,39 +1,45 @@
 {
-	"author": "John Le Drew <jp@antz29.com> (http://antz29.com)",
-	"name": "configr",
-	"description": "A library parse JSON configuration files.",
-	"keywords": ["configuration", "json"],
-	"version": "0.2.2",
-	"homepage": "http://github.com/antz29/node-configr",
-	"repository": {
-		"type": "git",
-		"url": "git:/git://github.com/antz29/node-configr.git"
-	},
-
-   	"bugs": {
-       	"email": "configr-bugs@antz29.com",
-	    "url": "http://github.com/antz29/node-configr/issues"
-    },
-
-	"engines": {
-		"node": ">=0.6.0"
-	},
-
-	"directories": {
-        	"lib": "./src/lib"
-	},
-
-	"main" : "./src/lib/configr.coffee",
-
-	"dependencies": {
-		"underscore" : "*",
-		"coffee-script" : "*"
-	},
-
-	"devDependencies": {
-		"expresso" : "*"
-	},
-	"scripts" : {
-		"test" : "./node_modules/expresso/bin/expresso"
-	}
+  "author": {
+    "name": "John Le Drew",
+    "email": "jp@antz29.com",
+    "url": "http://antz29.com"
+  },
+  "name": "configr",
+  "description": "A library parse JSON configuration files.",
+  "keywords": [
+    "configuration",
+    "json"
+  ],
+  "version": "0.3.0",
+  "homepage": "http://github.com/antz29/node-configr",
+  "repository": {
+    "type": "git",
+    "url": "git:/git://github.com/antz29/node-configr.git"
+  },
+  "bugs": {
+    "email": "configr-bugs@antz29.com",
+    "url": "http://github.com/antz29/node-configr/issues"
+  },
+  "engines": {
+    "node": "~0.10.0"
+  },
+  "directories": {
+    "lib": "./src/lib"
+  },
+  "main": "./src/lib/configr.js",
+  "dependencies": {
+    "underscore": "*"
+  },
+  "devDependencies": {
+    "expresso": "*"
+  },
+  "scripts": {
+    "test": "./node_modules/expresso/bin/expresso"
+  },
+  "maintainers": [
+    {
+      "name": "antz29",
+      "email": "jp@antz29.com"
+    }
+  ]
 }

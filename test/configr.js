@@ -59,17 +59,6 @@ var tests = {
 			assert.equal(prod.get().db.obj.foo,'bar');
 			delete prod
 		});
-	},
-	'You can load coffee config' : function(beforeExit, assert) {
-		console.log('* You can load coffee config');
-		var Configr = require('../');
-		var c = new Configr({root:test_dir, language:'coffee'});
-		
-		c.on('ready',function() {
-			assert.equal(c.get().test.foo,'bar');
-		})
-		
-		delete c
 	}
 };
 
