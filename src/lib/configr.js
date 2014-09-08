@@ -2,44 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 
-function Configr(root,env) {
-  var self = this;
-  
-  self.options = {
-    root: root,
-    env: env
-  };
-
-  self.config = {};
-
-  self._load();
-}
-
-Configr.prototype.getRoot = function() {
-  var self = this;
-
-  return self.options.root;
-};
-
-Configr.prototype.getEnv = function() {
-  var self = this;
-
-  return self.options.env;
-};
-
-Configr.prototype._load = function() {
-  var self = this;  
-
-  var data = loadConfig(self.options.root, self.options.env);
-  self.config = mergeConfig(self.config, data);
-};
-
-Configr.prototype.get = function() {
-  var self = this;
-
-  return self.config;
-};
-
 var loadConfigFromDir = function(dir) {
   var out = {};
 
@@ -120,4 +82,4 @@ var mergeConfig = function(conf1, conf2) {
   return conf1;
 };
 
-module.exports = Configr;
+module.exports = loadConfig;

@@ -24,13 +24,13 @@ place the configuration files in the there for each environment. For example, yo
 config dir, and in there you have 'general.js' and 'db.js' files. See below
 
     // general.js
-    module.exports.config = {
+    module.exports = {
         "app_name" : "test_app",
         "hawtness" : "extreme"
     }
 
     // db.js
-    module.exports.config = {
+    module.exports = {
         "host" : "127.0.0.1",
         "user" : "myuser",
         "pass" : "mypass",
@@ -57,7 +57,7 @@ You can then create environment specific config overrides; let's create a dev en
 a folder called 'dev' in the config dir, and we add a db.js file with specific overrides for 
 the dev environment. 
 
-     module.exports.config = {
+     module.exports = {
         "host" : "dev.db.com",
         "user" : "devuser",
         "pass" : "devpass"
