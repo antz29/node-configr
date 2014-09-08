@@ -91,20 +91,16 @@ When you create a configr instance (as shown below) the internal structure will 
 	
     // Load the configuration
 
-    c.on('ready',function() {
-        // Access the configuration values
-        c.get().db // will return { "host" : "127.0.0.1", "user" : "myuser", "pass" : "mypass", "db" : "mydb"}
-        c.get().general.app_name // will return "test_app"
-    });
+    // Access the configuration values
+    c.get().db // will return { "host" : "127.0.0.1", "user" : "myuser", "pass" : "mypass", "db" : "mydb"}
+    c.get().general.app_name // will return "test_app"
 
     // Load the configuration for the dev environment
     var c = new Configr('/path/to/config/files','dev');
 
-    c.on('ready',function() {
-        // Access the configuration values
-        c.get().db // will return { "host" : "dev.db.com", "user" : "devuser", "pass" : "devpass", "db" : "mydb"}
-        c.get().general.app_name // will return "test_app"
-    });
+    // Access the configuration values
+    c.get().db // will return { "host" : "dev.db.com", "user" : "devuser", "pass" : "devpass", "db" : "mydb"}
+    c.get().general.app_name // will return "test_app"
 
 
 ## Bugs

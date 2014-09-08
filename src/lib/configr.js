@@ -1,62 +1,84 @@
-// converted from CoffeeScript (so looks a bit weird at the moment...)
+var fs = require('fs');
+var path = require('path');
+var _ = require('underscore');
 
-var Configr, EventEmitter, fs, isPlainObject, loadConfig, loadConfigFromDir, mergeConfig, path, _,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+function Configr(root,env) {
+  var self = this;
+  
+  self.options = {
+    root: root,
+    env: env
+  };
 
-fs = require('fs');
-path = require('path');
+  self.config = {};
 
-_ = require('underscore');
+  self._load();
+}
 
-EventEmitter = require('events').EventEmitter;
+Configr.prototype.getRoot = function() {
+  var self = this;
 
-loadConfigFromDir = function(ext, dir, callback) {
-  var out;
-  out = {};
-  return fs.readdir(dir, function(err, files) {
-    var file, _fn, _i, _len;
-    _fn = function(file) {
+  return self.options.root;
+};
+
+Configr.prototype.getEnv = function() {
+  var self = this;
+
+  return self.options.env;
+};
+
+Configr.prototype._load = function() {
+  var self = this;  
+
+  var data = loadConfig(self.options.root, self.options.env);
+  self.config = mergeConfig(self.config, data);
+};
+
+Configr.prototype.get = function() {
+  var self = this;
+
+  return self.config;
+};
+
+var loadConfigFromDir = function(dir) {
+  var out = {};
+
+  var files = fs.readdirSync(dir);
+
+  files.forEach(function(file) {
       var error, file_path, name;
-      if (path.extname(file) !== ("." + ext)) {
+
+      if (path.extname(file) !== (".js")) {
         return null;
       }
+
       file_path = dir + '/' + file;
-      name = file.replace("." + ext, '');
+      name = file.replace(".js", '');
+
       try {
-        return out[name] = require(file_path).config;
+        out[name] = require(file_path).config;
       } catch (_error) {
         error = _error;
         throw error;
       }
-    };
-    for (_i = 0, _len = files.length; _i < _len; _i++) {
-      file = files[_i];
-      _fn(file);
-    }
-    return callback(out);
   });
+
+  return out;
 };
 
-loadConfig = function(ext, root, env, callback) {
-  return loadConfigFromDir(ext, root, function(data) {
-    var dir;
-    if (!env) {
-      return callback(data);
-    }
-    dir = root + '/' + env;
-    return fs.exists(dir, function(exists) {
-      if (!exists) {
-        return callback(data);
-      }
-      return loadConfigFromDir(ext, dir, function(env_data) {
-        return callback(mergeConfig(data, env_data));
-      });
-    });
-  });
+var loadConfig = function(root, env) {
+  var data = loadConfigFromDir(root);
+
+  var dir = root + '/' + env;  
+  if (env && fs.existsSync(dir)) {
+    var env_data = loadConfigFromDir(dir);
+    return mergeConfig(data, env_data);
+  }
+
+  return data;
 };
 
-isPlainObject = function(obj) {
+var isPlainObject = function(obj) {
   if (!obj) {
     return false;
   }
@@ -87,7 +109,7 @@ isPlainObject = function(obj) {
   return true;
 };
 
-mergeConfig = function(conf1, conf2) {
+var mergeConfig = function(conf1, conf2) {
   _.map(conf2, function(val, key) {
     if (conf1[key] && isPlainObject(val)) {
       return conf1[key] = mergeConfig(conf1[key], conf2[key]);
@@ -97,52 +119,5 @@ mergeConfig = function(conf1, conf2) {
   });
   return conf1;
 };
-
-Configr = (function(_super) {
-  __extends(Configr, _super);
-
-  function Configr(opt) {
-    if (opt == null) {
-      opt = {};
-    }
-    this.options = _.defaults(opt, {
-      root: root,
-      env: null,
-      language: 'js'
-    });
-    this.config = {};
-    this.loading = false;
-    this._load();
-  }
-
-  Configr.prototype.getRoot = function() {
-    return this.options.root;
-  };
-
-  Configr.prototype.getEnv = function() {
-    return this.options.env;
-  };
-
-  Configr.prototype._load = function() {
-    if (this.loading) {
-      return null;
-    }
-    this.loading = true;
-    return loadConfig(this.options.language, this.options.root, this.options.env, (function(_this) {
-      return function(data) {
-        _this.config = mergeConfig(_this.config, data);
-        _this.loading = false;
-        return _this.emit('ready');
-      };
-    })(this));
-  };
-
-  Configr.prototype.get = function() {
-    return this.config;
-  };
-
-  return Configr;
-
-})(EventEmitter);
 
 module.exports = Configr;
