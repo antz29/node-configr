@@ -1,4 +1,4 @@
-module.exports.config = {
+module.exports = {
 	"db"   : "fred",
 	"user" : "myuser",
 	"pass" : "mypass",

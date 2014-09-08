@@ -56,7 +56,7 @@ var loadConfigFromDir = function(dir) {
       name = file.replace(".js", '');
 
       try {
-        out[name] = require(file_path).config;
+        out[name] = require(file_path);
       } catch (_error) {
         error = _error;
         throw error;
